@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Digital Electronics Advanced Toolkit</title>
+  <meta name="description" content="A premium digital electronics toolkit with converter, K-map solver, truth tables, logic simulation, boolean simplification, flip-flops, and binary arithmetic." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="splashScreen" class="splash-screen">
+    <div class="splash-card glass">
+      <p class="eyebrow">Faculty of Engineering &amp; Technology</p>
+      <h2>Digital Electronics Advanced Toolkit</h2>
+      <p class="splash-subtitle">Department of Information and Communication Technology • Marwadi University</p>
+      <div class="splash-meta">
+        <span class="preview-chip">Kakshil Adeshara</span>
+        <span class="preview-chip">Enrollment No: 92500133056</span>
+        <span class="preview-chip">Digital Logic Design (01CT0107)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <header class="app-header glass">
+    <div>
+      <p class="eyebrow">Marwadi University</p>
+      <h1>Digital Electronics Advanced Toolkit</h1>
+      <p class="header-meta">Department of Information and Communication Technology</p>
+      <p class="header-meta">Faculty of Engineering &amp; Technology</p>
+    </div>
+    <div class="header-actions">
+      <div class="identity-badge glass-soft">
+        <strong>Kakshil Adeshara</strong>
+        <strong>Enrollment No: 92500133056</strong>
+        <span>Digital Logic Design (01CT0107)</span>
+      </div>
+      
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section id="homeView" class="view active">
+      <div class="hero glass">
+        <div>
+          <h2>Select Tool</h2>
+          <p class="hero-text">Tap a card to open a tool.</p>
+        </div>
+      </div>
+     
+      <section class="tool-grid" aria-label="Toolkit Options">
+        <button class="tool-card glass" data-target="converterView">
+          <span class="tool-icon">⇄</span>
+          <span class="tool-title">Number System Converter</span>
+          <span class="tool-desc">Binary, decimal, octal, hexadecimal conversions</span>
+        </button>
+        <button class="tool-card glass" data-target="kmapView">
+          <span class="tool-icon">⌗</span>
+          <span class="tool-title">K-Map Solver</span>
+          <span class="tool-desc">2, 3, 4-variable minimization with grouping</span>
+        </button>
+
+        <button class="tool-card glass" data-target="truthView">
+          <span class="tool-icon">⊞</span>
+          <span class="tool-title">Truth Table Generator</span>
+          <span class="tool-desc">Generate complete Boolean truth tables</span>
+        </button>
+
+        <button class="tool-card glass" data-target="logicView">
+          <span class="tool-icon">⎇</span>
+          <span class="tool-title">Logic Gate Simulator</span>
+          <span class="tool-desc">Simulate gates with instant output feedback</span>
+        </button>
+
+        <button class="tool-card glass" data-target="simplifierView">
+          <span class="tool-icon">ƒ</span>
+          <span class="tool-title">Boolean Simplifier</span>
+          <span class="tool-desc">Canonical SOP to reduced form with explanations</span>
+        </button>
+
+        <button class="tool-card glass" data-target="flipflopView">
+          <span class="tool-icon">⟲</span>
+          <span class="tool-title">Flip-Flop Simulator</span>
+          <span class="tool-desc">SR, JK, D, T behavior and next state analysis</span>
+        </button>
+
+        <button class="tool-card glass" data-target="arithmeticView">
+          <span class="tool-icon">±</span>
+          <span class="tool-title">Binary Arithmetic Tool</span>
+          <span class="tool-desc">Add, subtract, and multiply binary values</span>
+        </button>
+      </section>
+    </section>
+
+    <section id="toolViews" class="view-stack">
+      <article id="converterView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 01</p>
+            <h3>Number System Converter</h3>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Input Value</span>
+            <input id="converterInput" type="text" placeholder="Example: 101101 or 2AF" />
+          </label>
+          <label>
+            <span>From Base</span>
+            <select id="converterFrom">
+              <option value="2">Binary</option>
+              <option value="10" selected>Decimal</option>
+              <option value="8">Octal</option>
+              <option value="16">Hexadecimal</option>
+            </select>
+          </label>
+        </div>
+        <div class="button-row">
+          <button class="primary-btn" id="convertBtn">Convert</button>
+          <button class="secondary-btn" id="converterSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="converterResetBtn">Clear</button>
+        </div>
+        <div id="converterResult" class="result-panel"></div>
+      </article>
+
+      <article id="kmapView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 02</p>
+            <h3>K-Map Solver</h3>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Variables</span>
+            <select id="kmapVariables">
+              <option value="2">2 Variables</option>
+              <option value="3">3 Variables</option>
+              <option value="4" selected>4 Variables</option>
+            </select>
+          </label>
+          <label>
+            <span>Minterms</span>
+            <input id="kmapMinterms" type="text" placeholder="Example: 0,2,5,7,8,10,13,15" />
+          </label>
+        </div>
+        <div class="button-row">
+          <button class="primary-btn" id="kmapSolveBtn">Solve</button>
+          <button class="secondary-btn" id="kmapSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="kmapResetBtn">Clear</button>
+        </div>
+        <div id="kmapResult" class="result-panel"></div>
+      </article>
+
+      <article id="truthView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 03</p>
+            <h3>Truth Table Generator</h3>
+          </div>
+        </div>
+        <label>
+          <span>Boolean Expression</span>
+          <input id="truthExpression" type="text" placeholder="Example: A'B + AC + B'C" />
+          <small class="field-help">Supported operators: AND (* or adjacency), OR (+), NOT (! or '), XOR (^)</small>
+        </label>
+        <div class="button-row">
+          <button class="primary-btn" id="truthGenerateBtn">Generate</button>
+          <button class="secondary-btn" id="truthSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="truthResetBtn">Clear</button>
+        </div>
+        <div id="truthResult" class="result-panel"></div>
+      </article>
+
+      <article id="logicView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 04</p>
+            <h3>Logic Gate Simulator</h3>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Gate Type</span>
+            <select id="logicGateType">
+              <option>AND</option>
+              <option>OR</option>
+              <option>NOT</option>
+              <option>NAND</option>
+              <option>NOR</option>
+              <option>XOR</option>
+              <option>XNOR</option>
+            </select>
+          </label>
+          <label>
+            <span>Input Count</span>
+            <select id="logicInputCount">
+              <option value="2">2 Inputs</option>
+              <option value="3">3 Inputs</option>
+              <option value="4">4 Inputs</option>
+            </select>
+          </label>
+        </div>
+        <div id="logicInputs" class="toggle-grid"></div>
+        <div class="button-row">
+          <button class="primary-btn" id="logicRunBtn">Evaluate</button>
+          <button class="secondary-btn" id="logicSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="logicResetBtn">Clear</button>
+        </div>
+        <div id="logicResult" class="result-panel"></div>
+      </article>
+
+      <article id="simplifierView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 05</p>
+            <h3>Boolean Expression Simplifier</h3>
+          </div>
+        </div>
+        <label>
+          <span>Expression</span>
+          <input id="simplifierExpression" type="text" placeholder="Example: A'BC + ABC + AB'C + ABC'" />
+          <small class="field-help">The app evaluates the expression, builds canonical minterms, and reduces the SOP form.</small>
+        </label>
+        <div class="button-row">
+          <button class="primary-btn" id="simplifierRunBtn">Simplify</button>
+          <button class="secondary-btn" id="simplifierSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="simplifierResetBtn">Clear</button>
+        </div>
+        <div id="simplifierResult" class="result-panel"></div>
+      </article>
+
+      <article id="flipflopView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 06</p>
+            <h3>Flip-Flop Simulator</h3>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Flip-Flop Type</span>
+            <select id="flipflopType">
+              <option>SR</option>
+              <option>JK</option>
+              <option>D</option>
+              <option>T</option>
+            </select>
+          </label>
+          <label>
+            <span>Current Q</span>
+            <select id="flipflopQ">
+              <option value="0">0</option>
+              <option value="1">1</option>
+            </select>
+          </label>
+        </div>
+        <div id="flipflopInputs" class="toggle-grid"></div>
+        <div class="button-row">
+          <button class="primary-btn" id="flipflopRunBtn">Compute Next State</button>
+          <button class="secondary-btn" id="flipflopSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="flipflopResetBtn">Clear</button>
+        </div>
+        <div id="flipflopResult" class="result-panel"></div>
+      </article>
+
+      <article id="arithmeticView" class="view tool-view glass">
+        <div class="view-head">
+          <button class="back-btn" data-back>← Back</button>
+          <div>
+            <p class="section-tag">Tool 07</p>
+            <h3>Binary Arithmetic Tool</h3>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            <span>Operand A</span>
+            <input id="arithA" type="text" placeholder="Example: 1011" />
+          </label>
+          <label>
+            <span>Operand B</span>
+            <input id="arithB" type="text" placeholder="Example: 0110" />
+          </label>
+          <label>
+            <span>Operation</span>
+            <select id="arithOperation">
+              <option value="add">Addition</option>
+              <option value="subtract">Subtraction</option>
+              <option value="multiply">Multiplication</option>
+            </select>
+          </label>
+        </div>
+        <div class="button-row">
+          <button class="primary-btn" id="arithRunBtn">Calculate</button>
+          <button class="secondary-btn" id="arithSampleBtn">Try Sample</button>
+          <button class="ghost-btn" id="arithResetBtn">Clear</button>
+        </div>
+        <div id="arithResult" class="result-panel"></div>
+      </article>
+    </section>
+  </main>
+   <script type="module" src="script.js"></script>
+</body>
+</html>
